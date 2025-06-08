@@ -10,6 +10,7 @@ export interface QuizSet {
   id: string;
   title: string;
   description: string;
+  category: string;
   questions: QuizQuestion[];
 }
 
@@ -235,25 +236,190 @@ const advancedQuestions: QuizQuestion[] = [
   }
 ];
 
+// Linux実務基本クイズ（毎日使うコマンド）
+const linuxBasicQuestions: QuizQuestion[] = [
+  {
+    id: 31,
+    question: "ファイルの詳細情報（権限・サイズ・日時）を表示するコマンドは？",
+    options: ["ls", "ls -l", "ls -la", "list -a"],
+    correctAnswer: 2,
+    explanation: "ls -laコマンドで隠しファイルも含めて詳細情報を表示します。-lは詳細、-aは隠しファイル表示です。"
+  },
+  {
+    id: 32,
+    question: "現在いるディレクトリのパスを確認するコマンドは？",
+    options: ["cd", "pwd", "ls", "dir"],
+    correctAnswer: 1,
+    explanation: "pwdコマンド（print working directory）で現在の作業ディレクトリの絶対パスを表示します。"
+  },
+  {
+    id: 33,
+    question: "ディレクトリを再帰的にコピーするコマンドは？",
+    options: ["cp source dest", "cp -r source dest", "copy source dest", "cp -a source dest"],
+    correctAnswer: 1,
+    explanation: "cp -rコマンドでディレクトリとその中身を再帰的にコピーします。-rはrecursiveの意味です。"
+  },
+  {
+    id: 34,
+    question: "ファイルやディレクトリを強制的に削除するコマンドは？",
+    options: ["rm file", "rm -f file", "rm -rf file", "delete file"],
+    correctAnswer: 2,
+    explanation: "rm -rfコマンドで強制的に再帰削除します。-rは再帰、-fは強制（確認なし）です。注意して使用してください。"
+  },
+  {
+    id: 35,
+    question: "ファイル内で特定の文字列を検索するコマンドは？",
+    options: ["find \"text\" file", "search \"text\" file", "grep \"text\" file", "look \"text\" file"],
+    correctAnswer: 2,
+    explanation: "grepコマンドでファイル内の文字列を検索します。正規表現も使用できる強力な検索ツールです。"
+  },
+  {
+    id: 36,
+    question: "ログファイルをリアルタイムで監視するコマンドは？",
+    options: ["cat log.txt", "tail log.txt", "tail -f log.txt", "watch log.txt"],
+    correctAnswer: 2,
+    explanation: "tail -fコマンドでファイルの末尾をリアルタイムで監視できます。ログ監視で頻繁に使用されます。"
+  },
+  {
+    id: 37,
+    question: "現在実行中の全プロセスを表示するコマンドは？",
+    options: ["ps", "ps -e", "ps aux", "process"],
+    correctAnswer: 2,
+    explanation: "ps auxコマンドで全ユーザーの全プロセスを詳細表示します。aは全ユーザー、uは詳細、xはデーモンも含むという意味です。"
+  },
+  {
+    id: 38,
+    question: "プロセスIDを指定してプロセスを強制終了するコマンドは？",
+    options: ["stop 1234", "end 1234", "kill 1234", "kill -9 1234"],
+    correctAnswer: 3,
+    explanation: "kill -9コマンドでプロセスを強制終了します。-9はSIGKILLシグナルで、プロセスが無視できない終了シグナルです。"
+  },
+  {
+    id: 39,
+    question: "ファイルに実行権限を付与するコマンドは？",
+    options: ["chmod +x file", "chmod 755 file", "permission +x file", "chmod u+x file"],
+    correctAnswer: 0,
+    explanation: "chmod +xコマンドでファイルに実行権限を付与します。+xは全ユーザーに実行権限を与えます。"
+  },
+  {
+    id: 40,
+    question: "親ディレクトリも含めてディレクトリを作成するコマンドは？",
+    options: ["mkdir dir", "mkdir -p path/to/dir", "create -p path/to/dir", "md -p path/to/dir"],
+    correctAnswer: 1,
+    explanation: "mkdir -pコマンドで親ディレクトリが存在しない場合も自動的に作成します。-pはparentの意味です。"
+  }
+];
+
+// Linux実務応用クイズ（週数回使うコマンド）
+const linuxAdvancedQuestions: QuizQuestion[] = [
+  {
+    id: 41,
+    question: "ファイル名で検索してファイルを見つけるコマンドは？",
+    options: ["search -name \"*.log\"", "find . -name \"*.log\"", "locate \"*.log\"", "grep -name \"*.log\""],
+    correctAnswer: 1,
+    explanation: "find . -name \"pattern\"でカレントディレクトリ以下からファイル名パターンで検索します。"
+  },
+  {
+    id: 42,
+    question: "tarアーカイブを展開するコマンドは？",
+    options: ["tar -xf archive.tar", "tar -xzf archive.tar.gz", "untar archive.tar", "extract archive.tar"],
+    correctAnswer: 1,
+    explanation: "tar -xzfでgzip圧縮されたtarアーカイブを展開します。-xは展開、-zはgzip、-fはファイル指定です。"
+  },
+  {
+    id: 43,
+    question: "ディスクの使用量を人間が読みやすい形式で表示するコマンドは？",
+    options: ["disk", "df", "df -h", "diskusage"],
+    correctAnswer: 2,
+    explanation: "df -hコマンドでディスク使用量をGB、MBなど人間が読みやすい単位で表示します。-hはhuman-readableの意味です。"
+  },
+  {
+    id: 44,
+    question: "ディレクトリのサイズを確認するコマンドは？",
+    options: ["ls -s dirname", "size dirname", "du -sh dirname", "dir -s dirname"],
+    correctAnswer: 2,
+    explanation: "du -shコマンドでディレクトリの合計サイズを人間が読みやすい形式で表示します。-sは合計、-hは人間が読みやすい形式です。"
+  },
+  {
+    id: 45,
+    question: "システムの負荷やプロセスを動的に監視するコマンドは？",
+    options: ["ps aux", "monitor", "top", "system"],
+    correctAnswer: 2,
+    explanation: "topコマンドでCPU使用率、メモリ使用量、プロセス一覧をリアルタイムで監視できます。"
+  },
+  {
+    id: 46,
+    question: "URLからファイルをダウンロードするコマンドは？",
+    options: ["download http://example.com/file", "get http://example.com/file", "curl -O http://example.com/file", "fetch http://example.com/file"],
+    correctAnswer: 2,
+    explanation: "curl -Oコマンドでファイルをダウンロードし、元のファイル名で保存します。-Oは元のファイル名を使用する意味です。"
+  },
+  {
+    id: 47,
+    question: "過去に実行したコマンドの履歴を表示するコマンドは？",
+    options: ["history", "log", "commands", "past"],
+    correctAnswer: 0,
+    explanation: "historyコマンドで過去に実行したコマンドの履歴を表示します。番号付きで表示され、!番号で再実行も可能です。"
+  },
+  {
+    id: 48,
+    question: "コマンドがどこにあるかパスを調べるコマンドは？",
+    options: ["where ls", "which ls", "find ls", "locate ls"],
+    correctAnswer: 1,
+    explanation: "whichコマンドで実行可能ファイルのフルパスを表示します。環境変数PATHから検索します。"
+  },
+  {
+    id: 49,
+    question: "複数ディレクトリで再帰的に文字列を検索するコマンドは？",
+    options: ["grep \"text\" *", "grep -r \"text\" .", "search -r \"text\"", "find \"text\" -r"],
+    correctAnswer: 1,
+    explanation: "grep -rコマンドで指定ディレクトリ以下のすべてのファイルから文字列を再帰的に検索します。"
+  },
+  {
+    id: 50,
+    question: "ファイルの所有者を変更するコマンドは？",
+    options: ["chmod user file", "chown user file", "owner user file", "setowner user file"],
+    correctAnswer: 1,
+    explanation: "chownコマンドでファイルの所有者を変更します。chown user:group fileの形式でグループも同時に変更可能です。"
+  }
+];
+
 // クイズセット定義
 export const quizSets: QuizSet[] = [
   {
-    id: "basic",
+    id: "git-basic",
     title: "Git基本操作",
     description: "Gitの基本的なコマンドを学習（初心者向け）",
+    category: "Git",
     questions: basicQuestions
   },
   {
-    id: "practical",
+    id: "git-practical",
     title: "Git実用コマンド",
     description: "日常的によく使うGitコマンドを学習（初心者〜中級者向け）",
+    category: "Git",
     questions: practicalQuestions
   },
   {
-    id: "advanced", 
+    id: "git-advanced", 
     title: "Git応用操作",
     description: "より高度なGitコマンドを学習（中級者向け）",
+    category: "Git",
     questions: advancedQuestions
+  },
+  {
+    id: "linux-basic",
+    title: "Linux実務基本",
+    description: "毎日使うLinuxコマンドを学習（実務必須）",
+    category: "Linux",
+    questions: linuxBasicQuestions
+  },
+  {
+    id: "linux-advanced",
+    title: "Linux実務応用",
+    description: "週数回使うLinuxコマンドを学習（実務応用）",
+    category: "Linux",
+    questions: linuxAdvancedQuestions
   }
 ];
 

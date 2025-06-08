@@ -15,7 +15,7 @@ test.describe('クイズアプリケーション - パフォーマンステス�
     expect(loadTime).toBeLessThan(3000);
     
     // 主要な要素が表示されていることを確認
-    await expect(page.locator('h4:has-text("Gitクイズ")')).toBeVisible();
+    await expect(page.locator('h4:has-text("エンジニア学習クイズ")')).toBeVisible();
     await expect(page.locator('text=学習したいクイズセットを選択してください')).toBeVisible();
   });
 
@@ -64,7 +64,7 @@ test.describe('クイズアプリケーション - パフォーマンステス�
     }
     
     // 全ての操作が1秒以内に完了することを確認
-    operationTimes.forEach((time, index) => {
+    operationTimes.forEach((time) => {
       expect(time).toBeLessThan(1000);
     });
     

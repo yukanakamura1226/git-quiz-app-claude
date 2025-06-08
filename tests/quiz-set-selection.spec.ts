@@ -9,18 +9,22 @@ test.describe('クイズセット選択機能', () => {
 
   test('セット選択画面が正しく表示されること', async ({ page }) => {
     // タイトルが表示されること
-    await expect(page.locator('h4:has-text("Gitクイズ")')).toBeVisible();
+    await expect(page.locator('h4:has-text("エンジニア学習クイズ")')).toBeVisible();
     await expect(page.locator('text=学習したいクイズセットを選択してください')).toBeVisible();
     
     // 各セットが表示されること
     await expect(page.locator('text=Git基本操作')).toBeVisible();
     await expect(page.locator('text=Git実用コマンド')).toBeVisible();
     await expect(page.locator('text=Git応用操作')).toBeVisible();
+    await expect(page.locator('text=Linux実務基本')).toBeVisible();
+    await expect(page.locator('text=Linux実務応用')).toBeVisible();
     
     // 各セットの説明が表示されること
     await expect(page.locator('text=Gitの基本的なコマンドを学習（初心者向け）')).toBeVisible();
     await expect(page.locator('text=日常的によく使うGitコマンドを学習（初心者〜中級者向け）')).toBeVisible();
     await expect(page.locator('text=より高度なGitコマンドを学習（中級者向け）')).toBeVisible();
+    await expect(page.locator('text=毎日使うLinuxコマンドを学習（実務必須）')).toBeVisible();
+    await expect(page.locator('text=週数回使うLinuxコマンドを学習（実務応用）')).toBeVisible();
   });
 
   test('基本操作セットを選択できること', async ({ page }) => {
@@ -56,6 +60,28 @@ test.describe('クイズセット選択機能', () => {
     await expect(page.locator('text=Git応用操作')).toBeVisible();
   });
 
+  test('Linux実務基本セットを選択できること', async ({ page }) => {
+    await page.locator('text=Linux実務基本').click();
+    
+    // クイズ画面に遷移することを確認
+    await expect(page.locator('text=問題 1 / 10')).toBeVisible();
+    await expect(page.locator('text=Linuxクイズ')).toBeVisible();
+    
+    // セット名が表示されることを確認
+    await expect(page.locator('text=Linux実務基本')).toBeVisible();
+  });
+
+  test('Linux実務応用セットを選択できること', async ({ page }) => {
+    await page.locator('text=Linux実務応用').click();
+    
+    // クイズ画面に遷移することを確認
+    await expect(page.locator('text=問題 1 / 10')).toBeVisible();
+    await expect(page.locator('text=Linuxクイズ')).toBeVisible();
+    
+    // セット名が表示されることを確認
+    await expect(page.locator('text=Linux実務応用')).toBeVisible();
+  });
+
   test('セット選択に戻る機能が動作すること', async ({ page }) => {
     // セットを選択
     await page.locator('text=Git基本操作').click();
@@ -78,6 +104,8 @@ test.describe('クイズセット選択機能', () => {
     await expect(page.locator('text=10問').first()).toBeVisible();
     await expect(page.locator('text=10問').nth(1)).toBeVisible();
     await expect(page.locator('text=10問').nth(2)).toBeVisible();
+    await expect(page.locator('text=10問').nth(3)).toBeVisible();
+    await expect(page.locator('text=10問').nth(4)).toBeVisible();
   });
 
   test('セットカードのホバー効果が機能すること', async ({ page }) => {
