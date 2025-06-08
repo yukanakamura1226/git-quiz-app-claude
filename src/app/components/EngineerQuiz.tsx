@@ -9,7 +9,7 @@ import QuizSetSelection from './QuizSetSelection';
 import QuizComplete from './QuizComplete';
 import QuizQuestion from './QuizQuestion';
 
-function GitQuizComponent() {
+function EngineerQuizComponent() {
   const [selectedQuizSet, setSelectedQuizSet] = useState<QuizSet | null>(null);
   const [quizState, setQuizState] = useState<QuizState>({
     currentQuestionIndex: 0,
@@ -32,7 +32,7 @@ function GitQuizComponent() {
 
   const loadQuizProgress = useCallback(() => {
     try {
-      const saved = localStorage.getItem('gitQuizState');
+      const saved = localStorage.getItem('engineerQuizState');
       if (saved) {
         const parsedState = JSON.parse(saved);
         setQuizState(parsedState);
@@ -44,7 +44,7 @@ function GitQuizComponent() {
 
   const saveQuizProgress = useCallback(() => {
     try {
-      localStorage.setItem('gitQuizState', JSON.stringify(quizState));
+      localStorage.setItem('engineerQuizState', JSON.stringify(quizState));
     } catch (error) {
       console.error('Failed to save quiz progress:', error);
     }
@@ -105,7 +105,7 @@ function GitQuizComponent() {
 
   const handleResetQuiz = () => {
     setQuizState(resetQuizState());
-    localStorage.removeItem('gitQuizState');
+    localStorage.removeItem('engineerQuizState');
   };
 
   const resetQuizState = () => ({
@@ -162,8 +162,8 @@ function GitQuizComponent() {
   );
 }
 
-const GitQuiz = dynamic(() => Promise.resolve(GitQuizComponent), {
+const EngineerQuiz = dynamic(() => Promise.resolve(EngineerQuizComponent), {
   ssr: false
 });
 
-export default GitQuiz;
+export default EngineerQuiz;
