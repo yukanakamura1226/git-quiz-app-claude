@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
+import dynamic from 'next/dynamic';
 import {
   Box,
   Card,
@@ -19,7 +20,7 @@ import {
   useMediaQuery
 } from '@mui/material';
 import { CheckCircle, Cancel, Refresh, Quiz, ArrowBack } from '@mui/icons-material';
-import { quizSets, QuizSet, QuizQuestion } from '../quiz-data';
+import { quizSets, QuizSet } from '../quiz-data';
 
 interface QuizResult {
   questionId: number;
@@ -38,7 +39,7 @@ interface QuizState {
   score: number;
 }
 
-export default function GitQuiz() {
+function GitQuizComponent() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   
@@ -52,6 +53,12 @@ export default function GitQuiz() {
     results: [],
     score: 0
   });
+
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const currentQuestions = selectedQuizSet?.questions || [];
   const currentQuestion = currentQuestions[quizState.currentQuestionIndex];
@@ -250,6 +257,10 @@ export default function GitQuiz() {
     if (percentage >= 60) return 'warning';
     return 'error';
   };
+
+  if (!mounted) {
+    return null;
+  }
 
   // セット選択画面
   if (!selectedQuizSet) {
@@ -452,3 +463,9 @@ export default function GitQuiz() {
     </Container>
   );
 }
+
+const GitQuiz = dynamic(() => Promise.resolve(GitQuizComponent), {
+  ssr: false
+});
+
+export default GitQuiz;
