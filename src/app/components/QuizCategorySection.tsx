@@ -41,7 +41,11 @@ export default function QuizCategorySection({
         <Typography variant="h5" sx={{ color: `${color}.main`, fontWeight: 'bold' }}>
           {title}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography 
+          variant="body2" 
+          color="text.secondary"
+          sx={{ whiteSpace: 'pre-line', fontFamily: 'monospace', fontSize: '0.875rem' }}
+        >
           {description}
         </Typography>
       </Paper>

@@ -388,36 +388,36 @@ const linuxAdvancedQuestions: QuizQuestion[] = [
 export const quizSets: QuizSet[] = [
   {
     id: "git-basic",
-    title: "Git基本操作",
-    description: "Gitの基本的なコマンドを学習（初心者向け）",
+    title: "Level 1: 基本操作",
+    description: "Gitの基本的なコマンドを学習",
     category: "Git",
     questions: basicQuestions
   },
   {
     id: "git-practical",
-    title: "Git実用コマンド",
-    description: "日常的によく使うGitコマンドを学習（初心者〜中級者向け）",
+    title: "Level 2: 実用操作",
+    description: "日常的によく使うコマンドを学習",
     category: "Git",
     questions: practicalQuestions
   },
   {
     id: "git-advanced", 
-    title: "Git応用操作",
-    description: "より高度なGitコマンドを学習（中級者向け）",
+    title: "Level 3: 応用操作",
+    description: "より高度なコマンドを学習",
     category: "Git",
     questions: advancedQuestions
   },
   {
     id: "linux-basic",
-    title: "Linux実務基本",
-    description: "毎日使うLinuxコマンドを学習（実務必須）",
+    title: "Level 1: 実務基本",
+    description: "毎日使うコマンドを学習",
     category: "Linux",
     questions: linuxBasicQuestions
   },
   {
     id: "linux-advanced",
-    title: "Linux実務応用",
-    description: "週数回使うLinuxコマンドを学習（実務応用）",
+    title: "Level 2: 実務応用",
+    description: "週数回使うコマンドを学習",
     category: "Linux",
     questions: linuxAdvancedQuestions
   }
