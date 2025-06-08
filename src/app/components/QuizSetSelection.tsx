@@ -30,12 +30,7 @@ export default function QuizSetSelection({ onSelectQuizSet }: QuizSetSelectionPr
 
       <QuizCategorySection
         title="Git コマンド"
-        description={`├─ Level 1: 基本操作（10問）
-│   Gitの基本的なコマンドを学習
-├─ Level 2: 実用操作（10問）
-│   日常的によく使うコマンドを学習
-└─ Level 3: 応用操作（10問）
-    より高度なコマンドを学習`}
+        description=""
         color="primary"
         quizSets={gitQuizSets}
         onSelectQuizSet={onSelectQuizSet}
@@ -43,10 +38,7 @@ export default function QuizSetSelection({ onSelectQuizSet }: QuizSetSelectionPr
 
       <QuizCategorySection
         title="Linux コマンド"
-        description={`├─ Level 1: 実務基本（10問）
-│   毎日使うコマンドを学習
-└─ Level 2: 実務応用（10問）
-    週数回使うコマンドを学習`}
+        description=""
         color="success"
         quizSets={linuxQuizSets}
         onSelectQuizSet={onSelectQuizSet}
