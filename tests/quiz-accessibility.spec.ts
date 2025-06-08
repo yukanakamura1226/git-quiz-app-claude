@@ -1,8 +1,13 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('クイズアプリケーション - アクセシビリティテスト', () => {
-  test('キーボードナビゲーションが機能すること', async ({ page }) => {
+  test.beforeEach(async ({ page }) => {
     await page.goto('/');
+    // セット選択画面で基本操作セットを選択
+    await page.locator('text=Git基本操作').click();
+  });
+
+  test('キーボードナビゲーションが機能すること', async ({ page }) => {
     
     // Tabキーでフォーカス移動をテスト
     await page.keyboard.press('Tab');
@@ -20,18 +25,11 @@ test.describe('クイズアプリケーション - アクセシビリティテ�
     await page.keyboard.press('Space');
     await expect(secondRadio).toBeChecked();
     
-    // Tabキーで回答ボタンに移動
-    await page.keyboard.press('Tab');
-    const submitButton = page.locator('button:has-text("回答する")');
-    await expect(submitButton).toBeFocused();
-    
-    // Enterキーで回答実行
-    await page.keyboard.press('Enter');
-    await expect(page.locator('text=正解！, 不正解').first()).toBeVisible();
+    // Spaceキーで選択すると即座に回答される
+    await expect(page.locator('.MuiAlert-root')).toBeVisible();
   });
 
   test('適切なARIAラベルが設定されていること', async ({ page }) => {
-    await page.goto('/');
     
     // プログレスバーにARIA属性が設定されていることを確認
     const progressBar = page.locator('[role="progressbar"]');
@@ -46,11 +44,12 @@ test.describe('クイズアプリケーション - アクセシビリティテ�
   });
 
   test('フォーカス管理が適切であること', async ({ page }) => {
-    await page.goto('/');
     
-    // 選択肢を選択して回答
+    // 選択肢を選択（即座に回答される）
     await page.locator('[type="radio"]').first().click();
-    await page.locator('button:has-text("回答する")').click();
+    
+    // 結果が表示されることを確認
+    await expect(page.locator('.MuiAlert-root')).toBeVisible();
     
     // 次の問題ボタンが表示された後、フォーカスが適切に管理されること
     const nextButton = page.locator('button:has-text("次の問題")');
@@ -64,7 +63,6 @@ test.describe('クイズアプリケーション - アクセシビリティテ�
   });
 
   test('色彩コントラストが適切であること', async ({ page }) => {
-    await page.goto('/');
     
     // 主要な要素が表示されていることを確認（色に依存しない形で）
     await expect(page.locator('h4:has-text("Gitクイズ")')).toBeVisible();
@@ -77,48 +75,43 @@ test.describe('クイズアプリケーション - アクセシビリティテ�
     const checkedRadio = page.locator('input[type="radio"]:checked');
     await expect(checkedRadio).toBeVisible();
     
-    // 回答後の結果表示も確認
-    await page.locator('button:has-text("回答する")').click();
+    // 選択すると即座に結果が表示されることを確認
     const resultAlert = page.locator('[role="alert"], .MuiAlert-root');
     await expect(resultAlert).toBeVisible();
   });
 
   test('スクリーンリーダー対応が適切であること', async ({ page }) => {
-    await page.goto('/');
     
     // 見出し構造が適切であることを確認
     await expect(page.locator('h4:has-text("Gitクイズ")')).toBeVisible();
     await expect(page.locator('h5')).toBeVisible();
     
-    // ボタンに適切なテキストが設定されていることを確認
-    await expect(page.locator('button:has-text("回答する")')).toBeVisible();
+    // ボタンに適切なテキストが設定されていることを確認  
     await expect(page.locator('button:has-text("リセット")')).toBeVisible();
     
-    // 選択肢を選択して回答
+    // 選択肢を選択（即座に回答される）
     await page.locator('[type="radio"]').first().click();
-    await page.locator('button:has-text("回答する")').click();
     
     // 結果メッセージが適切に表示されることを確認
-    const resultText = page.locator('text=正解！, 不正解').first();
+    const resultText = page.locator('.MuiAlert-root');
     await expect(resultText).toBeVisible();
     
     // 次の問題ボタンのテキストが明確であることを確認
     await expect(page.locator('button:has-text("次の問題")')).toBeVisible();
   });
 
-  test('エラー状態のアクセシビリティ', async ({ page }) => {
-    await page.goto('/');
+  test('選択後の状態管理が適切であること', async ({ page }) => {
     
-    // 選択肢を選ばずに回答ボタンの状態を確認
-    const submitButton = page.locator('button:has-text("回答する")');
-    await expect(submitButton).toBeDisabled();
+    // 選択前は何も選択されていないことを確認
+    await expect(page.locator('input[type="radio"]:checked')).toHaveCount(0);
     
-    // 無効状態のボタンが適切に示されていることを確認
-    await expect(submitButton).toHaveAttribute('disabled');
-    
-    // 選択肢を選択すると有効になることを確認
+    // 選択肢を選択
     await page.locator('[type="radio"]').first().click();
-    await expect(submitButton).toBeEnabled();
-    await expect(submitButton).not.toHaveAttribute('disabled');
+    
+    // 選択後は他の選択肢が無効になることを確認
+    await expect(page.locator('input[type="radio"]:disabled')).toHaveCount(4);
+    
+    // 結果が表示されることを確認
+    await expect(page.locator('.MuiAlert-root')).toBeVisible();
   });
 });

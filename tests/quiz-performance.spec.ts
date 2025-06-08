@@ -16,28 +16,31 @@ test.describe('クイズアプリケーション - パフォーマンステス�
     
     // 主要な要素が表示されていることを確認
     await expect(page.locator('h4:has-text("Gitクイズ")')).toBeVisible();
-    await expect(page.locator('text=問題 1 / 10')).toBeVisible();
+    await expect(page.locator('text=学習したいクイズセットを選択してください')).toBeVisible();
   });
 
   test('ユーザーインタラクションのレスポンス時間', async ({ page }) => {
     await page.goto('/');
     
-    // 選択肢クリックのレスポンス時間を測定
+    // セット選択のレスポンス時間を測定
     const startTime = Date.now();
     
-    await page.locator('label:has-text("git init")').click();
+    await page.locator('text=Git基本操作').click();
     
-    // 選択状態の変更を確認
-    await expect(page.locator('input[type="radio"]:checked')).toBeVisible();
+    // クイズ画面への遷移を確認
+    await expect(page.locator('text=問題 1 / 10')).toBeVisible();
     
     const responseTime = Date.now() - startTime;
     
-    // 100ms以内にレスポンスすることを確認
-    expect(responseTime).toBeLessThan(100);
+    // 500ms以内にレスポンスすることを確認
+    expect(responseTime).toBeLessThan(500);
   });
 
   test('連続操作でのパフォーマンス', async ({ page }) => {
     await page.goto('/');
+    
+    // セットを選択
+    await page.locator('text=Git基本操作').click();
     
     const operationTimes: number[] = [];
     
@@ -45,14 +48,11 @@ test.describe('クイズアプリケーション - パフォーマンステス�
     for (let i = 0; i < 5; i++) {
       const startTime = Date.now();
       
-      // 選択肢を選択
+      // 選択肢を選択（即座に回答される）
       await page.locator('[type="radio"]').first().click();
       
-      // 回答ボタンをクリック
-      await page.locator('button:has-text("回答する")').click();
-      
       // 結果が表示されるまで待つ
-      await expect(page.locator('text=正解！, 不正解').first()).toBeVisible();
+      await expect(page.locator('.MuiAlert-root')).toBeVisible();
       
       const operationTime = Date.now() - startTime;
       operationTimes.push(operationTime);

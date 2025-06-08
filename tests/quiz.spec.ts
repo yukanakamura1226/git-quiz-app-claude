@@ -6,6 +6,9 @@ test.describe('Gitクイズアプリケーション', () => {
     await page.goto('/');
     await page.evaluate(() => localStorage.clear());
     await page.reload();
+    
+    // セット選択画面で基本操作セットを選択
+    await page.locator('text=Git基本操作').click();
   });
 
   test('ページが正しく読み込まれること', async ({ page }) => {
@@ -25,39 +28,24 @@ test.describe('Gitクイズアプリケーション', () => {
   });
 
   test('選択肢を選んで回答できること', async ({ page }) => {
-    await page.goto('/');
-    
-    // 最初は回答ボタンが無効であること
-    const submitButton = page.locator('button:has-text("回答する")');
-    await expect(submitButton).toBeDisabled();
-    
     // 正解の選択肢（git init）を選択
     await page.locator('label:has-text("git init")').click();
     
-    // 回答ボタンが有効になること
-    await expect(submitButton).toBeEnabled();
-    
-    // 回答ボタンをクリック
-    await submitButton.click();
-    
     // 正解メッセージが表示されること
     await expect(page.locator('text=正解！')).toBeVisible();
-    await expect(page.locator('text=git initコマンドでローカルリポジトリを初期化します。')).toBeVisible();
+    await expect(page.locator('text=git initコマンドで')).toBeVisible();
     
     // 次の問題ボタンが表示されること
     await expect(page.locator('button:has-text("次の問題")')).toBeVisible();
   });
 
   test('不正解の場合も適切に表示されること', async ({ page }) => {
-    await page.goto('/');
-    
     // 間違った選択肢を選択
     await page.locator('label:has-text("git start")').click();
-    await page.locator('button:has-text("回答する")').click();
     
     // 不正解メッセージが表示されること
     await expect(page.locator('text=不正解')).toBeVisible();
-    await expect(page.locator('text=git initコマンドでローカルリポジトリを初期化します。')).toBeVisible();
+    await expect(page.locator('text=git initコマンドで')).toBeVisible();
   });
 
   test('クイズを最後まで進めることができること', async ({ page }) => {
@@ -68,14 +56,11 @@ test.describe('Gitクイズアプリケーション', () => {
       // 進行状況を確認
       await expect(page.locator(`text=問題 ${i} / 10`)).toBeVisible();
       
-      // 最初の選択肢を選択（テストの簡略化のため）
+      // 最初の選択肢を選択（即座に回答される）
       await page.locator('[type="radio"]').first().click();
       
-      // 回答する
-      await page.locator('button:has-text("回答する")').click();
-      
       // 結果が表示されるまで待つ
-      await expect(page.locator('text=正解！, 不正解').first()).toBeVisible();
+      await expect(page.locator('.MuiAlert-root')).toBeVisible();
       
       if (i < 10) {
         // 次の問題へ
@@ -94,11 +79,9 @@ test.describe('Gitクイズアプリケーション', () => {
   });
 
   test('リセット機能が動作すること', async ({ page }) => {
-    await page.goto('/');
-    
     // 問題を進める
     await page.locator('[type="radio"]').first().click();
-    await page.locator('button:has-text("回答する")').click();
+    await expect(page.locator('.MuiAlert-root')).toBeVisible();
     await page.locator('button:has-text("次の問題")').click();
     
     // 2問目に到達していることを確認
@@ -118,7 +101,7 @@ test.describe('Gitクイズアプリケーション', () => {
     // クイズを完了まで進める（簡略化）
     for (let i = 1; i <= 10; i++) {
       await page.locator('[type="radio"]').first().click();
-      await page.locator('button:has-text("回答する")').click();
+      await expect(page.locator('.MuiAlert-root')).toBeVisible();
       
       if (i < 10) {
         await page.locator('button:has-text("次の問題")').click();
@@ -136,11 +119,9 @@ test.describe('Gitクイズアプリケーション', () => {
   });
 
   test('ローカルストレージに状態が保存されること', async ({ page }) => {
-    await page.goto('/');
-    
     // 問題を進める
     await page.locator('[type="radio"]').first().click();
-    await page.locator('button:has-text("回答する")').click();
+    await expect(page.locator('.MuiAlert-root')).toBeVisible();
     await page.locator('button:has-text("次の問題")').click();
     
     // ページをリロード
@@ -173,7 +154,7 @@ test.describe('Gitクイズアプリケーション', () => {
     
     // 2問目に進む
     await page.locator('[type="radio"]').first().click();
-    await page.locator('button:has-text("回答する")').click();
+    await expect(page.locator('.MuiAlert-root')).toBeVisible();
     await page.locator('button:has-text("次の問題")').click();
     
     // 進行状況が更新されることを確認（20%）
@@ -185,9 +166,8 @@ test.describe('Gitクイズアプリケーション', () => {
     
     // 回答後に説明が表示されることを確認
     await page.locator('[type="radio"]').first().click();
-    await page.locator('button:has-text("回答する")').click();
     
     // 説明文が表示されること
-    await expect(page.locator('text=git initコマンドでローカルリポジトリを初期化します。')).toBeVisible();
+    await expect(page.locator('text=git initコマンドで')).toBeVisible();
   });
 });
