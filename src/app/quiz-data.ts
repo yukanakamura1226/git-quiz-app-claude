@@ -166,9 +166,9 @@ const advancedQuestions: QuizQuestion[] = [
   {
     id: 21,
     question: "ワーキングディレクトリの変更を破棄するコマンドは？",
-    options: ["git reset", "git checkout --", "git restore", "git revert"],
+    options: ["git reset", "git checkout -- <file>", "git restore", "git revert"],
     correctAnswer: 2,
-    explanation: "git restoreコマンドでワーキングディレクトリの変更を破棄します。Git 2.23以降で推奨される方法です。"
+    explanation: "git restoreコマンドでワーキングディレクトリの変更を破棄します。Git 2.23以降で推奨される方法です。従来はgit checkout -- <file>が使われていました。"
   },
   {
     id: 22,
