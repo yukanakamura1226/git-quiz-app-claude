@@ -20,144 +20,218 @@ const basicQuestions: QuizQuestion[] = [
     question: "Gitでローカルリポジトリを初期化するコマンドは？",
     options: ["git init", "git start", "git create", "git new"],
     correctAnswer: 0,
-    explanation: "git initコマンドでローカルリポジトリを初期化します。"
+    explanation: "git initコマンドで現在のディレクトリに新しいGitリポジトリを初期化します。.gitディレクトリが作成されます。"
   },
   {
     id: 2,
     question: "ファイルをステージングエリアに追加するコマンドは？",
     options: ["git commit", "git add", "git push", "git stage"],
     correctAnswer: 1,
-    explanation: "git addコマンドでファイルをステージングエリアに追加します。"
+    explanation: "git addコマンドでファイルをステージングエリア（インデックス）に追加します。git add .で全ファイルを追加できます。"
   },
   {
     id: 3,
     question: "変更をコミットするコマンドは？",
-    options: ["git save", "git commit", "git record", "git store"],
-    correctAnswer: 1,
-    explanation: "git commitコマンドで変更をコミットします。-mオプションでメッセージを追加できます。"
+    options: ["git save", "git record", "git commit", "git store"],
+    correctAnswer: 2,
+    explanation: "git commitコマンドでステージングエリアの変更をリポジトリに記録します。-mオプションでメッセージを追加できます。"
   },
   {
     id: 4,
     question: "現在のリポジトリの状態を確認するコマンドは？",
-    options: ["git info", "git status", "git state", "git check"],
-    correctAnswer: 1,
-    explanation: "git statusコマンドで現在のリポジトリの状態を確認できます。"
+    options: ["git info", "git state", "git check", "git status"],
+    correctAnswer: 3,
+    explanation: "git statusコマンドで変更されたファイル、ステージングされたファイル、現在のブランチなどを確認できます。"
   },
   {
     id: 5,
     question: "リモートリポジトリを複製するコマンドは？",
-    options: ["git copy", "git clone", "git download", "git duplicate"],
-    correctAnswer: 1,
-    explanation: "git cloneコマンドでリモートリポジトリを複製します。"
+    options: ["git copy", "git download", "git clone", "git duplicate"],
+    correctAnswer: 2,
+    explanation: "git cloneコマンドでリモートリポジトリを複製します。履歴も含めて完全なコピーが作成されます。"
   },
   {
     id: 6,
     question: "リモートリポジトリに変更をプッシュするコマンドは？",
-    options: ["git upload", "git push", "git send", "git sync"],
-    correctAnswer: 1,
-    explanation: "git pushコマンドでリモートリポジトリに変更をプッシュします。"
+    options: ["git upload", "git send", "git sync", "git push"],
+    correctAnswer: 3,
+    explanation: "git pushコマンドでローカルのコミットをリモートリポジトリに送信します。"
   },
   {
     id: 7,
     question: "リモートリポジトリから最新の変更を取得してマージするコマンドは？",
-    options: ["git fetch", "git pull", "git download", "git sync"],
-    correctAnswer: 1,
-    explanation: "git pullコマンドでリモートリポジトリから変更を取得してマージします。"
+    options: ["git fetch", "git download", "git pull", "git sync"],
+    correctAnswer: 2,
+    explanation: "git pullコマンドはgit fetchとgit mergeを組み合わせたもので、リモートの変更を取得して現在のブランチにマージします。"
   },
   {
     id: 8,
-    question: "新しいブランチを作成して切り替えるコマンドは？",
-    options: ["git branch -new", "git checkout -b", "git create-branch", "git switch -new"],
-    correctAnswer: 1,
-    explanation: "git checkout -bコマンドで新しいブランチを作成して切り替えます。"
+    question: "ブランチを切り替えるコマンドは？",
+    options: ["git change", "git move", "git goto", "git switch"],
+    correctAnswer: 3,
+    explanation: "git switchコマンドでブランチを切り替えます。従来はgit checkoutが使われていましたが、Git 2.23以降はswitchが推奨されます。"
   },
   {
     id: 9,
     question: "コミット履歴を表示するコマンドは？",
-    options: ["git history", "git log", "git commits", "git timeline"],
-    correctAnswer: 1,
-    explanation: "git logコマンドでコミット履歴を表示します。"
+    options: ["git history", "git commits", "git log", "git timeline"],
+    correctAnswer: 2,
+    explanation: "git logコマンドでコミット履歴を表示します。--onelineオプションで簡潔な表示も可能です。"
   },
   {
     id: 10,
-    question: "ブランチをマージするコマンドは？",
-    options: ["git combine", "git merge", "git join", "git unite"],
+    question: "現在のブランチ一覧を表示するコマンドは？",
+    options: ["git list", "git branches", "git branch", "git show-branch"],
+    correctAnswer: 2,
+    explanation: "git branchコマンドでブランチ一覧を表示します。現在のブランチは*マークで示されます。"
+  }
+];
+
+// Git実用コマンドクイズ（初心者〜中級者向け）
+const practicalQuestions: QuizQuestion[] = [
+  {
+    id: 11,
+    question: "新しいブランチを作成して切り替えるコマンドは？",
+    options: ["git branch -new", "git switch -c", "git create-branch", "git checkout -new"],
     correctAnswer: 1,
-    explanation: "git mergeコマンドでブランチをマージします。"
+    explanation: "git switch -cコマンドで新しいブランチを作成して切り替えます。従来のgit checkout -bも使用可能です。"
+  },
+  {
+    id: 12,
+    question: "ブランチをマージするコマンドは？",
+    options: ["git combine", "git join", "git merge", "git unite"],
+    correctAnswer: 2,
+    explanation: "git mergeコマンドで指定したブランチを現在のブランチにマージします。"
+  },
+  {
+    id: 13,
+    question: "ファイルをGitの追跡から除外するコマンドは？",
+    options: ["git ignore", "git exclude", "git untrack", "git rm --cached"],
+    correctAnswer: 3,
+    explanation: "git rm --cachedコマンドでファイルをGitの追跡から除外します。ファイル自体は削除されません。"
+  },
+  {
+    id: 14,
+    question: "リモートリポジトリの情報を表示するコマンドは？",
+    options: ["git remote", "git remotes", "git remote -v", "git origin"],
+    correctAnswer: 2,
+    explanation: "git remote -vコマンドでリモートリポジトリの名前とURLを表示します。"
+  },
+  {
+    id: 15,
+    question: "ファイルの変更差分を表示するコマンドは？",
+    options: ["git diff", "git compare", "git changes", "git delta"],
+    correctAnswer: 0,
+    explanation: "git diffコマンドでワーキングディレクトリとステージングエリアの差分を表示します。"
+  },
+  {
+    id: 16,
+    question: "直前のコミットを取り消すコマンドは？",
+    options: ["git undo", "git revert HEAD", "git reset HEAD~1", "git cancel"],
+    correctAnswer: 2,
+    explanation: "git reset HEAD~1コマンドで直前のコミットを取り消します。--softオプションで変更を保持できます。"
+  },
+  {
+    id: 17,
+    question: "設定情報を確認するコマンドは？",
+    options: ["git settings", "git info", "git config --list", "git show-config"],
+    correctAnswer: 2,
+    explanation: "git config --listコマンドで現在のGit設定を一覧表示します。"
+  },
+  {
+    id: 18,
+    question: "リモートから最新情報を取得するコマンドは？",
+    options: ["git download", "git get", "git retrieve", "git fetch"],
+    correctAnswer: 3,
+    explanation: "git fetchコマンドでリモートの最新情報を取得します。ローカルブランチへのマージは行いません。"
+  },
+  {
+    id: 19,
+    question: "追跡されていないファイルを削除するコマンドは？",
+    options: ["git clean -f", "git clear", "git remove", "git cleanup"],
+    correctAnswer: 0,
+    explanation: "git clean -fコマンドで追跡されていないファイルを削除します。-dオプションでディレクトリも削除できます。"
+  },
+  {
+    id: 20,
+    question: "スタッシュに変更を一時保存するコマンドは？",
+    options: ["git save", "git store", "git stash", "git temp"],
+    correctAnswer: 2,
+    explanation: "git stashコマンドで現在の変更を一時的に保存します。git stash popで取り出せます。"
   }
 ];
 
 // Git応用操作クイズ（中級者向け）
 const advancedQuestions: QuizQuestion[] = [
   {
-    id: 11,
+    id: 21,
     question: "ワーキングディレクトリの変更を破棄するコマンドは？",
-    options: ["git reset", "git checkout", "git restore", "git revert"],
+    options: ["git reset", "git checkout --", "git restore", "git revert"],
     correctAnswer: 2,
-    explanation: "git restoreコマンドでワーキングディレクトリの変更を破棄します。"
+    explanation: "git restoreコマンドでワーキングディレクトリの変更を破棄します。Git 2.23以降で推奨される方法です。"
   },
   {
-    id: 12,
+    id: 22,
     question: "ステージングエリアから変更を取り消すコマンドは？",
     options: ["git unstage", "git restore --staged", "git reset HEAD", "git undo"],
     correctAnswer: 1,
     explanation: "git restore --stagedコマンドでステージングエリアから変更を取り消します。"
   },
   {
-    id: 13,
+    id: 23,
     question: "コミットメッセージを修正するコマンドは？",
-    options: ["git edit", "git commit --amend", "git modify", "git update"],
-    correctAnswer: 1,
+    options: ["git edit", "git modify", "git commit --amend", "git update"],
+    correctAnswer: 2,
     explanation: "git commit --amendコマンドで直前のコミットメッセージを修正できます。"
   },
   {
-    id: 14,
-    question: "スタッシュに変更を一時保存するコマンドは？",
-    options: ["git save", "git stash", "git store", "git temp"],
-    correctAnswer: 1,
-    explanation: "git stashコマンドで現在の変更を一時的に保存できます。"
-  },
-  {
-    id: 15,
+    id: 24,
     question: "リベースを実行するコマンドは？",
-    options: ["git merge", "git rebase", "git relocate", "git reapply"],
-    correctAnswer: 1,
-    explanation: "git rebaseコマンドでコミット履歴を整理し、ブランチを別のベースに移動できます。"
+    options: ["git merge", "git relocate", "git reapply", "git rebase"],
+    correctAnswer: 3,
+    explanation: "git rebaseコマンドでコミット履歴を整理し、ブランチのベースを変更できます。"
   },
   {
-    id: 16,
-    question: "ファイルの変更履歴を表示するコマンドは？",
-    options: ["git history", "git blame", "git track", "git follow"],
-    correctAnswer: 1,
+    id: 25,
+    question: "ファイルの変更履歴を行単位で表示するコマンドは？",
+    options: ["git history", "git track", "git blame", "git annotate"],
+    correctAnswer: 2,
     explanation: "git blameコマンドでファイルの各行がいつ誰によって変更されたかを表示します。"
   },
   {
-    id: 17,
+    id: 26,
     question: "特定のコミットの変更内容を表示するコマンドは？",
-    options: ["git diff", "git show", "git view", "git display"],
-    correctAnswer: 1,
-    explanation: "git showコマンドで特定のコミットの変更内容を表示します。"
+    options: ["git diff", "git view", "git show", "git display"],
+    correctAnswer: 2,
+    explanation: "git showコマンドで特定のコミットの詳細な変更内容を表示します。"
   },
   {
-    id: 18,
-    question: "リモートリポジトリから変更を取得するコマンドは？",
-    options: ["git download", "git fetch", "git get", "git retrieve"],
-    correctAnswer: 1,
-    explanation: "git fetchコマンドでリモートリポジトリから変更を取得します。"
+    id: 27,
+    question: "コンフリクトを解決した後にリベースを続行するコマンドは？",
+    options: ["git rebase --continue", "git rebase --proceed", "git rebase --resolve", "git rebase --go"],
+    correctAnswer: 0,
+    explanation: "git rebase --continueコマンドでコンフリクト解決後にリベースを続行します。"
   },
   {
-    id: 19,
-    question: "コンフリクトを解決した後にマージを完了するコマンドは？",
-    options: ["git resolve", "git commit", "git complete", "git finish"],
-    correctAnswer: 1,
-    explanation: "コンフリクトを解決した後、git commitでマージを完了します。"
-  },
-  {
-    id: 20,
+    id: 28,
     question: "タグを作成するコマンドは？",
-    options: ["git mark", "git tag", "git label", "git version"],
-    correctAnswer: 1,
-    explanation: "git tagコマンドで特定のコミットにタグを付けることができます。"
+    options: ["git mark", "git label", "git tag", "git version"],
+    correctAnswer: 2,
+    explanation: "git tagコマンドで特定のコミットにタグを付けます。-aオプションで注釈付きタグを作成できます。"
+  },
+  {
+    id: 29,
+    question: "過去のコミットを対話的に編集するコマンドは？",
+    options: ["git rebase -i", "git edit", "git interactive", "git modify"],
+    correctAnswer: 0,
+    explanation: "git rebase -iコマンドで過去のコミットを対話的に編集、結合、削除できます。"
+  },
+  {
+    id: 30,
+    question: "特定のコミットを取り消す新しいコミットを作成するコマンドは？",
+    options: ["git undo", "git rollback", "git revert", "git reverse"],
+    correctAnswer: 2,
+    explanation: "git revertコマンドで指定したコミットの変更を打ち消す新しいコミットを作成します。"
   }
 ];
 
@@ -168,6 +242,12 @@ export const quizSets: QuizSet[] = [
     title: "Git基本操作",
     description: "Gitの基本的なコマンドを学習（初心者向け）",
     questions: basicQuestions
+  },
+  {
+    id: "practical",
+    title: "Git実用コマンド",
+    description: "日常的によく使うGitコマンドを学習（初心者〜中級者向け）",
+    questions: practicalQuestions
   },
   {
     id: "advanced", 

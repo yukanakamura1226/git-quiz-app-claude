@@ -112,8 +112,8 @@ export default function GitQuiz() {
 
   const playCorrectSound = () => {
     try {
-      const AudioContext = window.AudioContext || (window as typeof window & { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      const context = new AudioContext();
+      const AudioContextClass = window.AudioContext || (window as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+      const context = new AudioContextClass();
       
       // ピンポン音を生成（シンプルなチャイム音）
       const oscillator1 = context.createOscillator();
@@ -149,8 +149,8 @@ export default function GitQuiz() {
 
   const playPageTurnSound = () => {
     try {
-      const AudioContext = window.AudioContext || (window as typeof window & { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      const context = new AudioContext();
+      const AudioContextClass = window.AudioContext || (window as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+      const context = new AudioContextClass();
       
       // ページめくり音を生成（紙がめくれる音）
       const whiteNoise = context.createBufferSource();
@@ -313,7 +313,7 @@ export default function GitQuiz() {
             スコア: {quizState.score} / {currentQuestions.length}
           </Typography>
           <Chip
-            label={`正答率: ${Math.round((quizState.score / currentQuestions.length) * 100)}%`}
+            label={`正答率: ${Math.min(100, Math.round((quizState.score / currentQuestions.length) * 100))}%`}
             color={getScoreColor()}
             sx={{ mb: 3, fontSize: '1.2rem', py: 3 }}
           />
@@ -376,7 +376,7 @@ export default function GitQuiz() {
 
           <RadioGroup
             value={quizState.selectedAnswer ?? ''}
-            onChange={(e) => handleAnswerSelect(Number(e.target.value))}
+            onChange={quizState.showResult ? undefined : (e) => handleAnswerSelect(Number(e.target.value))}
           >
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
               {currentQuestion.options.map((option: string, index: number) => (
@@ -391,13 +391,13 @@ export default function GitQuiz() {
                       '&:hover': {
                         backgroundColor: 'action.hover'
                       },
-                      cursor: 'pointer'
+                      cursor: quizState.showResult ? 'default' : 'pointer'
                     }}
-                    onClick={() => handleAnswerSelect(index)}
+                    onClick={quizState.showResult ? undefined : () => handleAnswerSelect(index)}
                   >
                     <FormControlLabel
                       value={index}
-                      control={<Radio />}
+                      control={<Radio disabled={quizState.showResult} />}
                       label={option}
                       sx={{ 
                         width: '100%', 
