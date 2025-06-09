@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { QuizState } from '../types/quiz';
-import { QuizSet } from '../quiz-data';
+import { QuizSet } from '../data';
 
 const STORAGE_KEY = 'engineerQuizState';
 

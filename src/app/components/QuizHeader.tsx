@@ -8,7 +8,7 @@ import {
   LinearProgress
 } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
-import { QuizSet } from '../quiz-data';
+import { QuizSet } from '../data';
 
 interface QuizHeaderProps {
   selectedQuizSet: QuizSet;
@@ -42,7 +42,7 @@ export default function QuizHeader({
         <Box sx={{ width: 120 }} />
       </Box>
       <Typography variant="h4" align="center" gutterBottom>
-        {selectedQuizSet?.category === 'Git' ? 'Git' : 'Linux'}クイズ
+        {selectedQuizSet?.category}クイズ
       </Typography>
       <Box sx={{ mb: 2 }}>
         <Typography variant="body2" color="text.secondary" gutterBottom>

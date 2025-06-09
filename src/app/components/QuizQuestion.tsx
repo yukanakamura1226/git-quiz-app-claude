@@ -9,7 +9,7 @@ import {
   useTheme,
   useMediaQuery
 } from '@mui/material';
-import { QuizSet } from '../quiz-data';
+import { QuizSet } from '../data';
 import { QuizState } from '../types/quiz';
 import QuizHeader from './QuizHeader';
 import AnswerOptions from './AnswerOptions';

@@ -1,21 +1,7 @@
-export interface QuizQuestion {
-  id: number;
-  question: string;
-  options: string[];
-  correctAnswer: number;
-  explanation: string;
-}
-
-export interface QuizSet {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  questions: QuizQuestion[];
-}
+import { QuizQuestion } from './types';
 
 // Git基本操作クイズ（初心者向け）
-const basicQuestions: QuizQuestion[] = [
+export const basicQuestions: QuizQuestion[] = [
   {
     id: 1,
     question: "Gitでローカルリポジトリを初期化するコマンドは？",
@@ -89,7 +75,7 @@ const basicQuestions: QuizQuestion[] = [
 ];
 
 // Git実用コマンドクイズ（初心者〜中級者向け）
-const practicalQuestions: QuizQuestion[] = [
+export const practicalQuestions: QuizQuestion[] = [
   {
     id: 11,
     question: "新しいブランチを作成して切り替えるコマンドは？",
@@ -163,7 +149,7 @@ const practicalQuestions: QuizQuestion[] = [
 ];
 
 // Git応用操作クイズ（中級者向け）
-const advancedQuestions: QuizQuestion[] = [
+export const advancedQuestions: QuizQuestion[] = [
   {
     id: 21,
     question: "ワーキングディレクトリの変更を破棄するコマンドは？",
@@ -235,193 +221,3 @@ const advancedQuestions: QuizQuestion[] = [
     explanation: "git revertコマンドで指定したコミットの変更を打ち消す新しいコミットを作成します。"
   }
 ];
-
-// Linux実務基本クイズ（毎日使うコマンド）
-const linuxBasicQuestions: QuizQuestion[] = [
-  {
-    id: 31,
-    question: "ファイルの詳細情報（権限・サイズ・日時）を表示するコマンドは？",
-    options: ["ls", "ls -l", "ls -la", "list -a"],
-    correctAnswer: 1,
-    explanation: "ls -lコマンドで詳細情報を表示します。-laは隠しファイルも含みますが、基本的な詳細表示は-lで十分です。-lはlong format、-aはall（隠しファイルを含む）の意味です。"
-  },
-  {
-    id: 32,
-    question: "現在いるディレクトリのパスを確認するコマンドは？",
-    options: ["cd", "pwd", "ls", "dir"],
-    correctAnswer: 1,
-    explanation: "pwdコマンド（print working directory）で現在の作業ディレクトリの絶対パスを表示します。"
-  },
-  {
-    id: 33,
-    question: "ディレクトリを再帰的にコピーするコマンドは？",
-    options: ["cp source dest", "cp -r source dest", "copy source dest", "cp -a source dest"],
-    correctAnswer: 1,
-    explanation: "cp -rコマンドでディレクトリとその中身を再帰的にコピーします。-rはrecursiveの意味です。-aは属性も保持してコピーするオプションです。"
-  },
-  {
-    id: 34,
-    question: "ファイルやディレクトリを強制的に削除するコマンドは？",
-    options: ["rm file", "rm -f file", "rm -rf directory", "delete file"],
-    correctAnswer: 2,
-    explanation: "rm -rfコマンドで強制的に再帰削除します。-rは再帰（ディレクトリ用）、-fは強制（確認なし）です。単一ファイルなら-fのみで十分です。⚠️ 注意して使用してください。"
-  },
-  {
-    id: 35,
-    question: "ファイル内で特定の文字列を検索するコマンドは？",
-    options: ["find \"text\" file", "search \"text\" file", "grep \"text\" file", "look \"text\" file"],
-    correctAnswer: 2,
-    explanation: "grepコマンドでファイル内の文字列を検索します。正規表現も使用できる強力な検索ツールです。"
-  },
-  {
-    id: 36,
-    question: "ログファイルをリアルタイムで監視するコマンドは？",
-    options: ["cat log.txt", "tail log.txt", "tail -f log.txt", "watch log.txt"],
-    correctAnswer: 2,
-    explanation: "tail -fコマンドでファイルの末尾をリアルタイムで監視できます。-fはfollow（追跡）の意味で、ログ監視で頻繁に使用されます。"
-  },
-  {
-    id: 37,
-    question: "現在実行中の全プロセスを表示するコマンドは？",
-    options: ["ps", "ps -e", "ps aux", "process"],
-    correctAnswer: 2,
-    explanation: "ps auxコマンドで全ユーザーの全プロセスを詳細表示します。BSD形式で、aは端末を持つ全プロセス、uはユーザー形式、xは端末を持たないプロセスも表示します。"
-  },
-  {
-    id: 38,
-    question: "プロセスIDを指定してプロセスを強制終了するコマンドは？",
-    options: ["stop 1234", "end 1234", "kill 1234", "kill -9 1234"],
-    correctAnswer: 3,
-    explanation: "kill -9コマンドでプロセスを強制終了します。-9はSIGKILLシグナルで、プロセスが無視できない終了シグナルです。通常はkillのみ（SIGTERM）を試してから使用します。"
-  },
-  {
-    id: 39,
-    question: "ファイルに実行権限を付与するコマンドは？",
-    options: ["chmod +x file", "chmod 755 file", "permission +x file", "chmod u+x file"],
-    correctAnswer: 0,
-    explanation: "chmod +xコマンドでファイルに実行権限を付与します。+xは全ユーザーに実行権限を与えます。より細かく制御する場合はu+x（所有者のみ）やa+x（全員）を使用します。"
-  },
-  {
-    id: 40,
-    question: "親ディレクトリも含めてディレクトリを作成するコマンドは？",
-    options: ["mkdir dir", "mkdir -p path/to/dir", "create -p path/to/dir", "md -p path/to/dir"],
-    correctAnswer: 1,
-    explanation: "mkdir -pコマンドで親ディレクトリが存在しない場合も自動的に作成します。-pはparents（親ディレクトリ）の意味です。"
-  }
-];
-
-// Linux実務応用クイズ（週数回使うコマンド）
-const linuxAdvancedQuestions: QuizQuestion[] = [
-  {
-    id: 41,
-    question: "ファイル名で検索してファイルを見つけるコマンドは？",
-    options: ["search -name \"*.log\"", "find . -name \"*.log\"", "locate \"*.log\"", "grep -name \"*.log\""],
-    correctAnswer: 1,
-    explanation: "find . -name \"pattern\"でカレントディレクトリ以下からファイル名パターンで検索します。locateは高速ですがデータベースの更新が必要です。"
-  },
-  {
-    id: 42,
-    question: "gzip圧縮されたtarアーカイブを展開するコマンドは？",
-    options: ["tar -xf archive.tar", "tar -xzf archive.tar.gz", "untar archive.tar", "extract archive.tar"],
-    correctAnswer: 1,
-    explanation: "tar -xzfでgzip圧縮されたtarアーカイブを展開します。-xは展開（extract）、-zはgzip、-fはファイル指定です。最近のtarは拡張子を自動判別するため-zは省略可能です。"
-  },
-  {
-    id: 43,
-    question: "ディスクの使用量を人間が読みやすい形式で表示するコマンドは？",
-    options: ["disk", "df", "df -h", "diskusage"],
-    correctAnswer: 2,
-    explanation: "df -hコマンドでディスク使用量をGB、MBなど人間が読みやすい単位で表示します。-hはhuman-readableの意味です。"
-  },
-  {
-    id: 44,
-    question: "ディレクトリのサイズを確認するコマンドは？",
-    options: ["ls -s dirname", "size dirname", "du -sh dirname", "dir -s dirname"],
-    correctAnswer: 2,
-    explanation: "du -shコマンドでディレクトリの合計サイズを人間が読みやすい形式で表示します。-sはsummary（合計）、-hはhuman-readableです。"
-  },
-  {
-    id: 45,
-    question: "システムの負荷やプロセスを動的に監視するコマンドは？",
-    options: ["ps aux", "monitor", "top", "system"],
-    correctAnswer: 2,
-    explanation: "topコマンドでCPU使用率、メモリ使用量、プロセス一覧をリアルタイムで監視できます。qキーで終了します。htopはより高機能な代替ツールです。"
-  },
-  {
-    id: 46,
-    question: "URLからファイルをダウンロードするコマンドは？",
-    options: ["download http://example.com/file", "get http://example.com/file", "curl -O http://example.com/file", "fetch http://example.com/file"],
-    correctAnswer: 2,
-    explanation: "curl -Oコマンドでファイルをダウンロードし、元のファイル名で保存します。-Oは大文字で、リモートファイル名を使用します。wgetも同様の用途で使用されます。"
-  },
-  {
-    id: 47,
-    question: "過去に実行したコマンドの履歴を表示するコマンドは？",
-    options: ["history", "log", "commands", "past"],
-    correctAnswer: 0,
-    explanation: "historyコマンドで過去に実行したコマンドの履歴を表示します。番号付きで表示され、!番号で再実行、!!で直前のコマンド再実行が可能です。"
-  },
-  {
-    id: 48,
-    question: "コマンドがどこにあるかパスを調べるコマンドは？",
-    options: ["where ls", "which ls", "find ls", "locate ls"],
-    correctAnswer: 1,
-    explanation: "whichコマンドで実行可能ファイルのフルパスを表示します。環境変数PATHから検索します。typeコマンドはエイリアスや関数も判別できます。"
-  },
-  {
-    id: 49,
-    question: "複数ディレクトリで再帰的に文字列を検索するコマンドは？",
-    options: ["grep \"text\" *", "grep -r \"text\" .", "search -r \"text\"", "find \"text\" -r"],
-    correctAnswer: 1,
-    explanation: "grep -rコマンドで指定ディレクトリ以下のすべてのファイルから文字列を再帰的に検索します。-Rはシンボリックリンクも辿ります。"
-  },
-  {
-    id: 50,
-    question: "ファイルの所有者を変更するコマンドは？",
-    options: ["chmod user file", "chown user file", "owner user file", "setowner user file"],
-    correctAnswer: 1,
-    explanation: "chownコマンドでファイルの所有者を変更します。chown user:group fileの形式でグループも同時に変更可能です。root権限が必要な場合が多いです。"
-  }
-];
-
-// クイズセット定義
-export const quizSets: QuizSet[] = [
-  {
-    id: "git-basic",
-    title: "Level 1: 基本操作",
-    description: "Gitの基本的なコマンドを学習",
-    category: "Git",
-    questions: basicQuestions
-  },
-  {
-    id: "git-practical",
-    title: "Level 2: 実用操作",
-    description: "日常的によく使うコマンドを学習",
-    category: "Git",
-    questions: practicalQuestions
-  },
-  {
-    id: "git-advanced", 
-    title: "Level 3: 応用操作",
-    description: "より高度なコマンドを学習",
-    category: "Git",
-    questions: advancedQuestions
-  },
-  {
-    id: "linux-basic",
-    title: "Level 1: 実務基本",
-    description: "毎日使うコマンドを学習",
-    category: "Linux",
-    questions: linuxBasicQuestions
-  },
-  {
-    id: "linux-advanced",
-    title: "Level 2: 実務応用",
-    description: "週数回使うコマンドを学習",
-    category: "Linux",
-    questions: linuxAdvancedQuestions
-  }
-];
-
-// 後方互換性のため
-export const gitQuizQuestions: QuizQuestion[] = basicQuestions;

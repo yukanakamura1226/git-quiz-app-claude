@@ -6,7 +6,7 @@ import {
   Typography,
   Container
 } from '@mui/material';
-import { quizSets, QuizSet } from '../quiz-data';
+import { quizSets, QuizSet } from '../data';
 import QuizCategorySection from './QuizCategorySection';
 
 interface QuizSetSelectionProps {
@@ -16,6 +16,7 @@ interface QuizSetSelectionProps {
 export default function QuizSetSelection({ onSelectQuizSet }: QuizSetSelectionProps) {
   const gitQuizSets = quizSets.filter(set => set.category === 'Git');
   const linuxQuizSets = quizSets.filter(set => set.category === 'Linux');
+  const nodeQuizSets = quizSets.filter(set => set.category === 'Node.js');
 
   return (
     <Container maxWidth="md">
@@ -41,6 +42,14 @@ export default function QuizSetSelection({ onSelectQuizSet }: QuizSetSelectionPr
         description=""
         color="success"
         quizSets={linuxQuizSets}
+        onSelectQuizSet={onSelectQuizSet}
+      />
+
+      <QuizCategorySection
+        title="Node.js/npm"
+        description=""
+        color="warning"
+        quizSets={nodeQuizSets}
         onSelectQuizSet={onSelectQuizSet}
       />
     </Container>

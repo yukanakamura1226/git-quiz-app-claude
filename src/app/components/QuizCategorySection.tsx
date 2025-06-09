@@ -9,12 +9,12 @@ import {
   Paper,
   Chip
 } from '@mui/material';
-import { QuizSet } from '../quiz-data';
+import { QuizSet } from '../data';
 
 interface QuizCategorySectionProps {
   title: string;
   description: string;
-  color: 'primary' | 'success';
+  color: 'primary' | 'success' | 'warning';
   quizSets: QuizSet[];
   onSelectQuizSet: (quizSet: QuizSet) => void;
 }

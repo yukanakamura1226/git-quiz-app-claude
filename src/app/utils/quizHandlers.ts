@@ -1,5 +1,5 @@
 import { QuizResult, QuizState } from '../types/quiz';
-import { QuizQuestion } from '../quiz-data';
+import { QuizQuestion } from '../data';
 import { playCorrectSound, playPageTurnSound } from '../components/AudioUtils';
 
 export const createAnswerSelectHandler = (
